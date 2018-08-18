@@ -1,8 +1,26 @@
 service: shop
 
+custom:
+  secrets: ${file(secrets.json)}
+
 provider:
   name: aws
   runtime: nodejs8.10
+  environment:
+    STRIPE_SECRET_KEY: ${self:custom.secrets.stripeSecretKey}
+
 functions:
-  hello:
-    handler: handler.hello
+  createCharge:
+    handler: handler.createCharge
+    events:
+      - http:
+          path: charges
+          method: post
+          cors: true
+  fetchProducts:
+    handler: handler.fetchProducts
+    events:
+      - http:
+          path: products
+          method: get
+          cors: true
