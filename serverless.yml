@@ -1,4 +1,6 @@
 service: shop
+app: evolve
+tenant: awitherow
 
 custom:
   secrets: ${file(secrets.json)}
@@ -18,7 +20,7 @@ functions:
           method: post
           cors: true
   fetchProducts:
-    handler: handler.fetchProducts
+    handler: handler.getProducts
     events:
       - http:
           path: products
